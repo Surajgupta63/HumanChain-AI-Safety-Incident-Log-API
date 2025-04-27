@@ -28,7 +28,7 @@ def login():
             session['email']    = user.email
             return redirect('/dashboard')
         else:
-            return render_template('login.html', failure='Invalid!!')
+            return render_template('login.html', error='Invalid!!')
 
     return render_template('login.html')
 
@@ -49,7 +49,7 @@ def signup():
             new_user = User(name=name, email=email, password=password)
             db.session.add(new_user)
             db.session.commit()
-            return redirect('/login')
+            redirect('/login')
 
         except:
             db.session.rollback()  # Rollback changes to avoid breaking the session
@@ -117,13 +117,15 @@ def incident():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+    if session['email']:
+        user = User.query.filter_by(email=session['email']).first()
     if request.method == 'POST':
         id = request.form['search']
         incident = IncidentDB.query.filter_by(id=id).first()
         if id == "" or incident is None:
-            return render_template('dashboard.html', id_not_found='Please give correct id!!')
+            return render_template('dashboard.html', id_not_found='Please give correct id!!', user=user)
 
-        return render_template('dashboard.html', incident=incident)
+        return render_template('dashboard.html', incident=incident, user=user)
 
 
 @app.route('/dashboard')
