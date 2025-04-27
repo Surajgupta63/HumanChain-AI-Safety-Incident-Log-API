@@ -28,7 +28,7 @@ def login():
             session['email']    = user.email
             return redirect('/dashboard')
         else:
-            return render_template('login.html', error = 'Invalid!!')
+            return render_template('login.html', failure='Invalid!!')
 
     return render_template('login.html')
 
@@ -69,7 +69,7 @@ def update(id):
         severity = request.form['severity'].upper()
 
         if severity not in allowed_severity:
-            return render_template('incident.html', 'sahi severity fill karo bhai!!')
+            return render_template('update.html',failure='sahi severity fill karo bhai!!', incident=incident)
         
         incident.title = title
         incident.description = description
@@ -78,7 +78,7 @@ def update(id):
         db.session.add(incident)
         db.session.commit()
         
-        return redirect('/dashboard')
+        return render_template('update.html', success='Successfully updated', incident=incident)
 
     
     return render_template('update.html', incident=incident)
@@ -100,18 +100,18 @@ def incident():
         severity = request.form['severity'].upper()
 
         if severity not in allowed_severity:
-            return render_template('incident.html', 'sahi severity fill karo bhai!!')
+            return render_template('incident.html', failure='sahi severity fill karo bhai!!')
         
         try:
             incidents_db = IncidentDB(title=title, description=description, severity=severity)
             db.session.add(incidents_db)
             db.session.commit()
         except Exception as e:
-            return render_template('incident.html', e)
+            return render_template('incident.html', failure=e)
         
         all_incidents = IncidentDB.query.all()
 
-        return redirect('/incident')
+        return render_template('incident.html', success='Your query has been successfully added. Now you can click show incidents to see all incidents')
 
     return render_template('incident.html')
 
@@ -121,15 +121,22 @@ def search():
         id = request.form['search']
         incident = IncidentDB.query.filter_by(id=id).first()
         if id == "" or incident is None:
-            return redirect('/dashboard')
+            return render_template('dashboard.html', id_not_found='Please give correct id!!')
 
         return render_template('dashboard.html', incident=incident)
 
 
 @app.route('/dashboard')
 def dashboard():
+    if session['email']:
+        user = User.query.filter_by(email=session['email']).first()
+
     all_incidents = IncidentDB.query.all()
-    return render_template('dashboard.html', all_incidents=all_incidents)
+    return render_template('dashboard.html', all_incidents=all_incidents, user=user)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 

@@ -16,6 +16,17 @@
 <body>
     <div class="container my-4">
         <h1>Humanchain AI Log Incident</h1>
+        {% if success %}
+        <div class="alert alert-success" role="alert">
+            {{ success }}
+          </div>
+        {% endif %}
+
+        {% if failure %}
+        <div class="alert alert-warning" role="alert">
+            {{ failure }}
+          </div>
+        {% endif %}
 
         <div class="my-4">
             <form action="/incident" method="POST">
@@ -26,7 +37,6 @@
                 <div class="mb-3">
                     <textarea class="form-control" name="description" placeholder="Leave a comment here"
                         id="description" style="height: 100px" required></textarea>
-                    <!-- <label for="floatingTextarea2">description...</label> -->
                 </div>
                 <div class="mb-3">
                     <label for="severity" class="form-label">Severity</label>

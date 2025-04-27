@@ -38,6 +38,7 @@ humanchain-incident-log/
 │   ├── dashboard.html
 │   ├── incident.html
 │   └── update.html
+│   └── 404.html
 ├── requirements.txt
 └── README.md
 ```
@@ -112,6 +113,7 @@ http://localhost:8000
 | `/update/<id>`   | GET, POST    | Update an existing incident         |
 | `/delete/<id>`   | GET          | Delete an incident                  |
 | `/search`        | GET, POST    | Search for an incident by ID        |
+| `/page_not_found`| GET          | Search for wrong url path           |
 
 ---
 
@@ -139,15 +141,8 @@ http://localhost:8000
 ```
 Flask
 Flask-SQLAlchemy
-Werkzeug
-python-dotenv
+python-dotenv (optional)
 ```
-
----
-
-## 📄 License
-
-Licensed under the [Suraj Gupta](LICENSE).
 
 ---
 

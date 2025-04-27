@@ -14,27 +14,38 @@
 <body class="bg-light">
     <nav class="navbar bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand text-white">Suraj Gupta</a>
+            <a class="navbar-brand text-white">Suraj Gupta <span>{{ user.email }}</span></a>
             <form class="d-flex" role="search" action="/search" method="POST">
                 <input class="form-control me-2 mx-1" type="search" name="search" id="search" placeholder="Search"
                     aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
+                <a href="/incident" class="btn btn-success mx-1">Incidents</a>
+                <a href="/logout" class="btn btn-outline-primary">Logout</a>
             </form>
         </div>
     </nav>
 
+    {% if id_not_found %}
+    <div class="alert alert-warning" role="alert">
+        {{ id_not_found }}
+        <a href="/dashboard" class="btn btn-success">Back to Dashboard</a>
+    </div>
+    {% else %}
+
     <div class="container my-5">
-        <h1 class="text-center mb-5">Incidents Dashboard</h1>
+        <h1 class="text-center mb-5">HumanChain AI Safety
+            Incident Log API Dashboard</h1>
         <div class="row">
             {% if incident %}
             <div class="col-md-6 mb-4">
                 <div class="card h-100 shadow-sm badge-dark">
                     <div class="card-body">
-                        <span class="badge badge-primary">id: {{ incident.id }}</span>
-                        <h5 class="card-title">{{ incident.title }}</h5>
+                        <span class="badge badge-primary mb-1">id: {{ incident.id }}</span>
+                        <h5 class="card-title">Title: {{ incident.title }}</h5>
+                        <h5 class="card-title">Description:</h5>
                         <p class="card-text">{{ incident.description }}</p>
-                        <span class="badge badge-danger">{{ incident.severity }}</span>
-                        <span class="mb-4 badge badge-success">{{ incident.reported_at }}</span> <br>
+                        Severity: <span class="badge badge-danger">{{ incident.severity }}</span>
+                        Reported_at: <span class="mb-4 badge badge-success">{{ incident.reported_at }}</span> <br>
                         <a href="/update/{{ incident.id }}" class="btn btn-warning">Update</a>
                         <a href="/delete/{{ incident.id }}" class="btn btn-danger">Delete</a>
                     </div>
@@ -45,13 +56,14 @@
             <div class="col-md-6 mb-4">
                 <div class="card h-100 shadow-sm badge-dark">
                     <div class="card-body">
-                        <span class="badge badge-primary">id: {{ incident.id }}</span>
-                        <h5 class="card-title">{{ incident.title }}</h5>
+                        <span class="badge badge-primary mb-1">id: {{ incident.id }}</span>
+                        <h5 class="card-title">Title: {{ incident.title }}</h5>
+                        <h5 class="card-title">Description:</h5>
                         <p class="card-text">{{ incident.description }}</p>
-                        <span class="badge badge-danger">{{ incident.severity }}</span>
-                        <span class="mb-4 badge badge-success">{{ incident.reported_at }}</span> <br>
-                        <a href="/update/{{ incident.id }}" class="btn btn-warning">Update</a>
+                        Severity: <span class="badge badge-danger">{{ incident.severity }}</span>
+                        Reported_at: <span class="mb-4 badge badge-success">{{ incident.reported_at }}</span> <br>
                         <a href="/delete/{{ incident.id }}" class="btn btn-danger">Delete</a>
+                        <a href="/update/{{ incident.id }}" class="btn btn-success">Update</a>
                     </div>
                 </div>
             </div>
@@ -60,6 +72,8 @@
         </div>
 
     </div>
+
+    {% endif %}
 
 </body>
 
