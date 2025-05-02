@@ -49,7 +49,7 @@ def signup():
             new_user = User(name=name, email=email, password=password)
             db.session.add(new_user)
             db.session.commit()
-            redirect('/login')
+            return redirect('/login')
 
         except:
             db.session.rollback()  # Rollback changes to avoid breaking the session
