@@ -16,11 +16,10 @@
         <div class="container-fluid">
             <a class="navbar-brand text-white">Suraj Gupta <span>{{ user.email }}</span></a>
             <form class="d-flex" role="search" action="/search" method="POST">
-                <input class="form-control me-2 mx-1" type="search" name="search" id="search" placeholder="Search"
+                <input class="form-control me-2 mx-1" type="search" name="search" id="search" placeholder="Search by id"
                     aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-                <a href="/incident" class="btn btn-success mx-1">Incidents</a>
-                <a href="/logout" class="btn btn-outline-primary">Logout</a>
+                <button class="btn btn-outline-success" type="submit">Search</button> 
+                <a href="/logout" class="btn btn-outline-primary mx-1">Logout</a>
             </form>
         </div>
     </nav>
@@ -34,7 +33,7 @@
 
     <div class="container my-5">
         <h1 class="text-center mb-5">HumanChain AI Safety
-            Incident Log API Dashboard</h1>
+            Incident Log API Dashboard <span><a href="/incident" class="btn btn-success mx-1">Log Incidents</a></span></h1>
         <div class="row">
             {% if incident %}
             <div class="col-md-6 mb-4">

@@ -147,4 +147,4 @@ if __name__ == '__main__':
         db.create_all()
         print('DB Setup Successfully!!')
     
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=8001)
